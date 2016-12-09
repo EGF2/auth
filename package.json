@@ -1,0 +1,27 @@
+{
+  "name": "auth",
+  "version": "0.1.0",
+  "main": "index.js",
+  "dependencies": {
+    "bunyan": "^1.5.1",
+    "commons": "git+https://github.com/EGF2/commons.git",
+    "restify": "^4.0.3",
+    "string-template": "latest",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "eslint": "^3.4.0",
+    "eslint-config-xo": "^0.15.4",
+    "mocha": "^2.3.4",
+    "supertest": "^1.1.0",
+    "supertest-as-promised": "^2.0.2",
+    "thinky": "^2.2.4"
+  },
+  "scripts": {
+    "start": "node index.js -c config.json",
+    "lint": "eslint .",
+    "test": "export NODE_ENV=test; mocha test/*.js -c config.json"
+  },
+  "license": "MIT"
+}

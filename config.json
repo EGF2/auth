@@ -1,0 +1,16 @@
+{
+  "port": 2016,
+  "session_lifetime": 86400,
+  "log_level": "debug",
+  "client-data": "http://127.0.0.1:8000/",
+  "pusher": "http://localhost:2017",
+  "email_from": "",
+  "rethinkdb": {
+    "host": "localhost",
+    "port": 28015,
+    "db": "test"
+  },
+  "elastic": {
+    "hosts": ["localhost:9200"]
+  }
+}
