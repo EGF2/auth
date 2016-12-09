@@ -88,7 +88,8 @@ exports.register = function(req) {
                     return sendVerifyEmail(user, systemUser)
                         .then(() => user);
                 })
-                .then(user => commons.createSession(user.id));
+                .then(user => commons.createSession(user.id))
+                .then(session => ({type: "Bearer", token: session.token}));
             });
         });
 };
