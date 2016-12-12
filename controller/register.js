@@ -30,6 +30,7 @@ exports.register = function(req) {
     var password = req.params.password;
     var firstName = req.params.first_name;
     var lastName = req.params.last_name;
+    var dateOfBirth = req.params.date_of_birth;
 
     if (!email) {
         throw new errors.MissingParameter("email");
@@ -42,6 +43,9 @@ exports.register = function(req) {
     }
     if (!lastName) {
         throw new errors.MissingParameter("last_name");
+    }
+    if (!dateOfBirth) {
+        throw new errors.MissingParameter("date_of_birth");
     }
 
     return searcher.search({object: "user", filters: {email}, count: 1})
@@ -68,6 +72,7 @@ exports.register = function(req) {
                             family: lastName
                         },
                         email: email,
+                        date_of_birth: dateOfBirth,
                         system: systemUser.id
                     })
                     .then(user => {
