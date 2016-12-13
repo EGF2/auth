@@ -81,12 +81,6 @@ exports.register = function(req) {
                             .then(systemUser => [user, systemUser]);
                     })
                 )
-                .catch(error => {
-                    // TODO
-                    if (error.code === 10009) {
-                        throw new errors.EmailAlreadyInUse();
-                    }
-                })
                 .then(res => {
                     var user = res[0];
                     var systemUser = res[1];
