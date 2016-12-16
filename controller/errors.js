@@ -14,6 +14,17 @@ function MissingParameter(param) {
 }
 util.inherits(MissingParameter, restify.RestError);
 
+function EmailAlreadyInUse() {
+    restify.RestError.call(this, {
+        restCode: "EmailAlreadyInUse",
+        statusCode: 409,
+        message: "email address already in use",
+        constructorOpt: EmailAlreadyInUse
+    });
+    this.name = "EmailAlreadyInUse";
+}
+util.inherits(EmailAlreadyInUse, restify.RestError);
+
 function SessionExpired() {
     restify.RestError.call(this, {
         restCode: "SessionExpired",
@@ -148,6 +159,7 @@ util.inherits(SendInstructionEmailError, restify.RestError);
 
 module.exports = {
     MissingParameter,
+    EmailAlreadyInUse,
     SessionExpired,
     InvalidAccessToken,
     UnknownServiceType,
