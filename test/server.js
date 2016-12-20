@@ -47,7 +47,8 @@ describe("test server", function() {
                     email: "test@example.com",
                     password: "123",
                     first_name: "John",
-                    last_name: "Doe"
+                    last_name: "Doe",
+                    date_of_birth: "1999-01-01T00:00:00.001Z"
                 })
                 .expect(200)
                 .end((err, res) => {
@@ -66,9 +67,13 @@ describe("test server", function() {
                     email: "test@example.com",
                     password: "sdf",
                     first_name: "John",
-                    last_name: "Doe"
+                    last_name: "Doe",
+                    date_of_birth: "1999-01-01T00:00:00.001Z"
                 })
-                .expect(409, {code: "EmailAlreadyInUse", message: "email address already in use"})
+                .expect(409, {
+                    code: "UniqueConstraintViolated",
+                    message: "Unique constraint violated for 'user-email-test@example.com'"
+                })
                 .end(done);
         });
 
@@ -78,7 +83,8 @@ describe("test server", function() {
                 .send({
                     email: "test@example.com",
                     password: "123",
-                    first_name: "John"
+                    first_name: "John",
+                    date_of_birth: "1999-01-01T00:00:00.001Z"
                 })
                 .expect(400)
                 .end(done);
@@ -168,7 +174,6 @@ describe("test server", function() {
                 .expect(200)
                 .expect(function(res) {
                     var data = res.body;
-                    // TODO regexp token and expires_at
                     expect(data).to.have.property("expires_at");
                     expect(data).to.have.property("token");
                     expect(data).to.have.property("user").match(/(([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12})/);
@@ -379,9 +384,9 @@ describe("test server", function() {
         });
     });
 
-    after(() => {
-        mockPusher.close();
-        var clean = require("../elastic_for_tests").clean;
-        return clean();
+    after(done => {
+        searcher.search({object: "user", filters: {email: "test@example.com"}, count: 1})
+            .then(found => clientData.deleteObject(found.results[0]))
+            .then(() => done());
     });
 });

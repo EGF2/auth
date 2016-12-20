@@ -8,6 +8,6 @@ components.init().then(() => {
     const server = require("./server");
     server.listen(config.port, () => logger.info(`server started at port ${config.port}`));
 }).catch(err => {
-    console.log(err);
+    console.error(err);
     process.exit(1);
 });
