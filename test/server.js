@@ -345,7 +345,7 @@ describe("test server", function() {
                     old_password: "wrong password",
                     new_password: "123"
                 })
-                .expect(401, {code: "WrongCredentials", message: "wrong email or password"})
+                .expect(401, {code: "WrongOldPassword", message: "wrong old password"})
                 .end(done);
         });
 

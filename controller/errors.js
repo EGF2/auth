@@ -146,6 +146,17 @@ function SendInstructionEmailError(error) {
 }
 util.inherits(SendInstructionEmailError, restify.RestError);
 
+function WrongOldPassword() {
+    restify.RestError.call(this, {
+        restCode: "WrongOldPassword",
+        statusCode: 401,
+        message: "wrong old password",
+        constructorOpt: WrongOldPassword
+    });
+    this.name = "WrongOldPassword";
+}
+util.inherits(WrongOldPassword, restify.RestError);
+
 module.exports = {
     MissingParameter,
     SessionExpired,
@@ -159,5 +170,6 @@ module.exports = {
     UnauthorizedDenied,
     OAuthServiceError,
     SendEmailError,
-    SendInstructionEmailError
+    SendInstructionEmailError,
+    WrongOldPassword
 };

@@ -38,7 +38,7 @@ exports.changePassword = function(req) {
         .then(systemUser => {
             var oldPasswordHash = commons.getPasswordHash(oldPassword, systemUser.salt);
             if (systemUser.password_hash !== oldPasswordHash) {
-                throw new errors.WrongCredentials();
+                throw new errors.WrongOldPassword();
             }
             var newPasswordHash = commons.getPasswordHash(newPassword, systemUser.salt);
             return clientData.updateObject(systemUser.id, {password_hash: newPasswordHash});
