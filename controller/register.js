@@ -53,26 +53,23 @@ exports.register = function(req) {
 
     return Promise.resolve().then(() => {
         return clientData.createObject({
-            object_type: "system_user",
-            salt,
-            password_hash: passwordHash
-        })
-        .then(systemUser =>
+            object_type: "user",
+            name: {
+                given: firstName,
+                family: lastName
+            },
+            email: email,
+            date_of_birth: dateOfBirth
+        }).then(user =>
             clientData.createObject({
-                object_type: "user",
-                name: {
-                    given: firstName,
-                    family: lastName
-                },
-                email: email,
-                date_of_birth: dateOfBirth,
-                system: systemUser.id
-            })
-            .then(user => {
-                verifyToken = user.id + "|" + verifyToken;
-                return clientData.updateObject(systemUser.id, {verify_token: verifyToken})
-                    .then(systemUser => [user, systemUser]);
-            })
+                object_type: "system_user",
+                salt,
+                password_hash: passwordHash,
+                verify_token: user.id + "|" + verifyToken
+            }).then(systemUser =>
+                clientData.updateObject(user.id, {system: systemUser.id})
+                    .then(user => [user, systemUser])
+            )
         )
         .then(res => {
             var user = res[0];
