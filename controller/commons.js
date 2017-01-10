@@ -29,3 +29,18 @@ exports.createSession = function(userId) {
         return clientData.updateObject(session.id, {token: token});
     });
 };
+
+exports.sendVerifyEmail = function(user, systemUser) {
+    return pusher.sendEmail({
+        template: "confirm_email",
+        to: user.email,
+        from: config.email_from,
+        params: {
+            name: `${user.name.given} ${user.name.family}`,
+            verifyToken: systemUser.verify_token
+        }
+    })
+    .catch(error => {
+        throw new errors.SendEmailError(error.message);
+    });
+}

@@ -10,5 +10,6 @@ module.exports = _.extend(
     require("./forgot_password"),
     require("./reset_password"),
     require("./session"),
-    require("./change_passowrd")
+    require("./change_passowrd"),
+    require("./resend_email_verification")
 );

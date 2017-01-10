@@ -157,6 +157,17 @@ function WrongOldPassword() {
 }
 util.inherits(WrongOldPassword, restify.RestError);
 
+function EmailAlreadyVerified() {
+    restify.RestError.call(this, {
+        restCode: "EmailAlreadyVerified",
+        statusCode: 409,
+        message: "email already verified",
+        constructorOpt: EmailAlreadyVerified
+    });
+    this.name = "EmailAlreadyVerified";
+}
+util.inherits(EmailAlreadyVerified, restify.RestError);
+
 module.exports = {
     MissingParameter,
     SessionExpired,
@@ -171,5 +182,6 @@ module.exports = {
     OAuthServiceError,
     SendEmailError,
     SendInstructionEmailError,
-    WrongOldPassword
+    WrongOldPassword,
+    EmailAlreadyVerified
 };

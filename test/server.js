@@ -39,6 +39,7 @@ describe("test server", function() {
         });
     });
 
+    var sessionToken;
     describe("register", () => {
         it("new user", done => {
             request(server)
@@ -56,8 +57,17 @@ describe("test server", function() {
                         return done(err);
                     }
                     expect(res.body).to.have.property("token");
+                    sessionToken = res.body.token;
                     delay(1000).then(() => done());
                 });
+        });
+
+        it("with resend verify token", done => {
+            request(server)
+                .post("/v1/resend_email_verification")
+                .set("authorization", `Bearer ${sessionToken}`)
+                .expect(200)
+                .end(done);
         });
 
         it("yet another user with the same email", done => {
@@ -125,7 +135,6 @@ describe("test server", function() {
         });
     });
 
-    var sessionToken;
     describe("login", () => {
         it("with wrong credentials", done => {
             request(server)

@@ -9,21 +9,6 @@ var config = require("../components").config;
 var pusher = require("commons/pusher")(config.pusher);
 var errors = require("./errors");
 
-function sendVerifyEmail(user, systemUser) {
-    return pusher.sendEmail({
-        template: "confirm_email",
-        to: user.email,
-        from: config.email_from,
-        params: {
-            name: `${user.name.given} ${user.name.family}`,
-            verifyToken: systemUser.verify_token
-        }
-    })
-    .catch(error => {
-        throw new errors.SendEmailError(error.message);
-    });
-}
-
 exports.register = function(req) {
     var email = req.params.email;
     var password = req.params.password;
@@ -74,7 +59,7 @@ exports.register = function(req) {
         .then(res => {
             var user = res[0];
             var systemUser = res[1];
-            return sendVerifyEmail(user, systemUser)
+            return commons.sendVerifyEmail(user, systemUser)
                 .then(() => user);
         })
         .then(user => commons.createSession(user.id))
