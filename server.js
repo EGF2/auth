@@ -22,8 +22,8 @@ function processResult(handler) {
 }
 
 server.post("/v1/register", processResult(controller.register));
-server.post("/v1/resend_email_verification", processResult(controller.resend_email_verification));
-server.get("/v1/verify_email", processResult(controller.verify_email));
+server.post("/v1/resend_email_verification", processResult(controller.resendEmailVerification));
+server.get("/v1/verify_email", processResult(controller.verifyEmail));
 server.post("/v1/login", processResult(controller.login));
 server.get("/v1/logout", processResult(controller.logout));
 server.get("/v1/forgot_password", processResult(controller.forgotPassword));

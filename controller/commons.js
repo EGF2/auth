@@ -7,6 +7,7 @@ const config = require("../components").config;
 const clientData = require("../components").clientData;
 const pusher = require("commons/pusher")(config.pusher);
 const lifetime = config.session_lifetime * 1000;
+const errors = require("./errors");
 
 exports.newSalt = function() {
     return crypto.randomBytes(64).toString("hex");
@@ -43,4 +44,4 @@ exports.sendVerifyEmail = function(user, systemUser) {
     .catch(error => {
         throw new errors.SendEmailError(error.message);
     });
-}
+};

@@ -6,7 +6,7 @@ var clientData = require("../components").clientData;
 var errors = require("./errors");
 var _ = require("underscore");
 
-exports.verify_email = function(req) {
+exports.verifyEmail = function(req) {
     var verifyToken = req.params.token;
 
     if (!verifyToken) {

@@ -5,7 +5,6 @@
 var clientData = require("../components").clientData;
 var crypto = require("crypto");
 var commons = require("./commons");
-var config = require("../components").config;
 var errors = require("./errors");
 
 exports.register = function(req) {
