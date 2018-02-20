@@ -6,7 +6,7 @@ const crypto = require("crypto");
 const config = require("../components").config;
 const clientData = require("../components").clientData;
 const pusher = require("commons/pusher")(config.pusher);
-const lifetime = config.session_lifetime * 1000;
+const lifetime = parseInt(config.session_lifetime) * 1000;
 const errors = require("./errors");
 
 exports.newSalt = function() {
