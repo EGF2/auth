@@ -21,6 +21,11 @@ function processResult(handler) {
     };
 }
 
+function getHealthcheck() {
+    return (req, res) => res.send(200);
+}
+
+server.get("/healthcheck", getHealthcheck());
 server.post("/v1/register", processResult(controller.register));
 server.post("/v1/resend_email_verification", processResult(controller.resendEmailVerification));
 server.get("/v1/verify_email", processResult(controller.verifyEmail));
